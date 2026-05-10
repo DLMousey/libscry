@@ -31,3 +31,48 @@ func TestInstantFull(t *testing.T) {
 		t.Error("Expected part[0] to be type:instant")
 	}
 }
+
+func TestColourAbbreviation(t *testing.T) {
+	query := "c:g"
+	parts := Parse(query)
+
+	expectedPart := map[string]string{"color": "green"}
+
+	if parts["color"] == "" {
+		t.Error("No 'color' part in results")
+	}
+
+	if parts["color"] != expectedPart["color"] {
+		t.Error("Expected part[0] to be color with value 'green'")
+	}
+}
+
+func TestColourFull(t *testing.T) {
+	query := "color:g"
+	parts := Parse(query)
+
+	expectedPart := map[string]string{"color": "green"}
+
+	if parts["color"] == "" {
+		t.Error("No 'color' part in results")
+	}
+
+	if parts["color"] != expectedPart["color"] {
+		t.Error("Expected part[0] to be color with value 'green'")
+	}
+}
+
+func TestColourFullCorrect(t *testing.T) {
+	query := "colour:g"
+	parts := Parse(query)
+
+	expectedPart := map[string]string{"color": "green"}
+
+	if parts["color"] == "" {
+		t.Error("No 'color' part in results")
+	}
+
+	if parts["color"] != expectedPart["color"] {
+		t.Error("Expected part[0] to be color with value 'green'")
+	}
+}
