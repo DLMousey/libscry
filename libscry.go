@@ -64,16 +64,12 @@ var colours = map[string]string{
 	CGREEN: "green",
 }
 
-type ColumnMapping struct {
-	Type    string `yaml:"type"`
-	SubType string `yaml:"subtype"`
-	Name    string `yaml:"name"`
-}
-
 var stopChars []string = []string{
 	TSPACE, TOR, TAND, TTYPE, TTYPEFULL, TCOLOR,
 	TCOLORFULL, TCOLORCORRECTFULL, TORACLE,
 	TORACLEFULL, TDOUBLEQUOTE, TSINGLEQUOTE,
+	TPOWER, TPOWERFULL, TTOUGHNESS, TTOUGHNESSFULL,
+	TLOYALTY, TLOYALTYFULL,
 }
 
 func Parse(input string) map[string]string {
@@ -91,7 +87,6 @@ func Parse(input string) map[string]string {
 	input = strings.ToLower(input)
 	parts := strings.Split(input, TSPACE)
 
-	//lastIdx := 0
 	for idx, part := range parts {
 		// Iterate over each of the tokens for each part and see if it's contained within this part
 		for _, stopChar := range stopChars {
@@ -116,6 +111,15 @@ func Parse(input string) map[string]string {
 				case ETYPE:
 					criteria[ETYPE] = part[endIndex:]
 					break
+				case EPOWER:
+					criteria[EPOWER] = part[endIndex:]
+					break
+				case ETOUGHNESS:
+					criteria[ETOUGHNESS] = part[endIndex:]
+					break
+				case ELOYALTY:
+					criteria[ELOYALTY] = part[endIndex:]
+					break
 				default:
 					extractName(criteria, idx, stopChar, part, parts, expansion)
 					break
@@ -128,11 +132,6 @@ func Parse(input string) map[string]string {
 }
 
 func extractName(criteria map[string]string, index int, stopChar string, part string, parts []string, expansion string) {
-	// If the quote isn't at the beginning of the part, we've probably processed this already
-	//if strings.Index(part, TDOUBLEQUOTE) != 0 {
-	//	return
-	//}
-
 	// First of all check if the current part contains 2 quotes.
 	// If there is 2 we'll skip the lookahead and add it straight into the criteria
 	quoteCount := strings.Count(part, TDOUBLEQUOTE)
