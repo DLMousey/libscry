@@ -16,11 +16,20 @@ const TCOLORFULL = "color:"
 const TCOLORCORRECTFULL = "colour:"
 const TORACLE = "o:"
 const TORACLEFULL = "oracle:"
+const TPOWERFULL = "power:"
+const TPOWER = "pow:"
+const TTOUGHNESSFULL = "toughness:"
+const TTOUGHNESS = "tou:"
+const TLOYALTYFULL = "loyalty:"
+const TLOYALTY = "loy:"
 
 const ETYPE = "type"
 const ENAME = "name"
 const ECOLOR = "color"
 const EORACLE = "oracle"
+const EPOWER = "power"
+const ETOUGHNESS = "toughness"
+const ELOYALTY = "loyalty"
 
 const CWHITE = "w"
 const CBLUE = "u"
@@ -39,6 +48,12 @@ var expansions = map[string]string{
 	TCOLORCORRECTFULL: ECOLOR,
 	TORACLE:           EORACLE,
 	TORACLEFULL:       EORACLE,
+	TPOWERFULL:        EPOWER,
+	TPOWER:            EPOWER,
+	TTOUGHNESSFULL:    ETOUGHNESS,
+	TTOUGHNESS:        ETOUGHNESS,
+	TLOYALTYFULL:      ELOYALTY,
+	TLOYALTY:          ELOYALTY,
 }
 
 var colours = map[string]string{
