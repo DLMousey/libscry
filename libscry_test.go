@@ -32,6 +32,36 @@ func TestInstantFull(t *testing.T) {
 	}
 }
 
+func TestCreatureAbbreviation(t *testing.T) {
+	query := "t:creature"
+	parts := Parse(query)
+
+	expectedPart := map[string]string{"type": "creature"}
+
+	if parts["type"] == "" {
+		t.Error("No 'type' part in results")
+	}
+
+	if parts["type"] != expectedPart["type"] {
+		t.Error("Expected part[0] to be type:creature")
+	}
+}
+
+func TestCreatureFull(t *testing.T) {
+	query := "type:creature"
+	parts := Parse(query)
+
+	expectedPart := map[string]string{"type": "creature"}
+
+	if parts["type"] == "" {
+		t.Error("No 'type' part in results")
+	}
+
+	if parts["type"] != expectedPart["type"] {
+		t.Error("Expected part[0] to be type:creature")
+	}
+}
+
 func TestColourAbbreviation(t *testing.T) {
 	query := "c:g"
 	parts := Parse(query)
