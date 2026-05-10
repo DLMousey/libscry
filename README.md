@@ -1,5 +1,7 @@
 # libscry - Standalone scryfall query syntax library
 
+[![Build and run tests](https://github.com/DLMousey/libscry/actions/workflows/go-onpush.yml/badge.svg)](https://github.com/DLMousey/libscry/actions/workflows/go-onpush.yml)
+
 ![libscrylogo.png](libscrylogo.png)
 
 `libscry` is a standalone Scryfall Query Language parser library - allowing scryfall search syntax to be implemented
