@@ -106,3 +106,33 @@ func TestColourFullCorrect(t *testing.T) {
 		t.Error("Expected part[0] to be color with value 'green'")
 	}
 }
+
+func TestConsolidated(t *testing.T) {
+	query := "pow:5 tou:5 loy:5 type:creature"
+	parts := Parse(query)
+
+	expectedParts := map[string]string{
+		"power":     "5",
+		"toughness": "5",
+		"loyalty":   "5",
+		"type":      "creature",
+	}
+
+	hasPower := parts["power"] != ""
+	hasToughness := parts["toughness"] != ""
+	hasLoyalty := parts["loyalty"] != ""
+	hasType := parts["type"] != ""
+
+	matchedPower := parts["power"] == expectedParts["power"]
+	matchedToughness := parts["toughness"] == expectedParts["toughness"]
+	matchedLoyalty := parts["loyalty"] == expectedParts["loyalty"]
+	matchedType := parts["type"] == expectedParts["type"]
+
+	if !hasPower || !hasToughness || !hasLoyalty || !hasType {
+		t.Error("Missing required part from parsed tokens")
+	}
+
+	if !matchedPower || !matchedToughness || !matchedLoyalty || !matchedType {
+		t.Error("Part mismatch")
+	}
+}
