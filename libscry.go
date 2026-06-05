@@ -108,17 +108,8 @@ func Parse(input string) map[string]string {
 				case ECOLOR:
 					criteria[ECOLOR] = colours[part[endIndex:endIndex+1]]
 					break
-				case ETYPE:
-					criteria[ETYPE] = part[endIndex:]
-					break
-				case EPOWER:
-					criteria[EPOWER] = part[endIndex:]
-					break
-				case ETOUGHNESS:
-					criteria[ETOUGHNESS] = part[endIndex:]
-					break
-				case ELOYALTY:
-					criteria[ELOYALTY] = part[endIndex:]
+				case EPOWER, ETOUGHNESS, ELOYALTY, ETYPE:
+					criteria[expansion] = part[endIndex:]
 					break
 				default:
 					extractName(criteria, idx, stopChar, part, parts, expansion)
