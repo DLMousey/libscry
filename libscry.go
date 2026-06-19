@@ -22,6 +22,8 @@ const TTOUGHNESSFULL = "toughness:"
 const TTOUGHNESS = "tou:"
 const TLOYALTYFULL = "loyalty:"
 const TLOYALTY = "loy:"
+const TMANACOST = "m:"
+const TMANACOSTFULL = "mana:"
 
 const ETYPE = "type"
 const ENAME = "name"
@@ -30,6 +32,7 @@ const EORACLE = "oracle"
 const EPOWER = "power"
 const ETOUGHNESS = "toughness"
 const ELOYALTY = "loyalty"
+const EMANA = "mana"
 
 const CWHITE = "w"
 const CBLUE = "u"
@@ -54,6 +57,8 @@ var expansions = map[string]string{
 	TTOUGHNESS:        ETOUGHNESS,
 	TLOYALTYFULL:      ELOYALTY,
 	TLOYALTY:          ELOYALTY,
+	TMANACOST:         EMANA,
+	TMANACOSTFULL:     EMANA,
 }
 
 var colours = map[string]string{
@@ -69,7 +74,7 @@ var stopChars []string = []string{
 	TCOLORFULL, TCOLORCORRECTFULL, TORACLE,
 	TORACLEFULL, TDOUBLEQUOTE, TSINGLEQUOTE,
 	TPOWER, TPOWERFULL, TTOUGHNESS, TTOUGHNESSFULL,
-	TLOYALTY, TLOYALTYFULL,
+	TLOYALTY, TLOYALTYFULL, TMANACOST, TMANACOSTFULL,
 }
 
 func Parse(input string) map[string]string {
@@ -108,7 +113,7 @@ func Parse(input string) map[string]string {
 				case ECOLOR:
 					criteria[ECOLOR] = colours[part[endIndex:endIndex+1]]
 					break
-				case EPOWER, ETOUGHNESS, ELOYALTY, ETYPE:
+				case EPOWER, ETOUGHNESS, ELOYALTY, ETYPE, EMANA:
 					criteria[expansion] = part[endIndex:]
 					break
 				default:

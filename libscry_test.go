@@ -107,8 +107,38 @@ func TestColourFullCorrect(t *testing.T) {
 	}
 }
 
+func TestManaCost(t *testing.T) {
+	query := "m:3"
+	parts := Parse(query)
+
+	expectedPart := map[string]string{"mana": "3"}
+
+	if parts["mana"] == "" {
+		t.Error("No 'mana' part in results")
+	}
+
+	if parts["mana"] != expectedPart["mana"] {
+		t.Error("Expected part[0] to be mana with value '3'")
+	}
+}
+
+func TestManaCostFull(t *testing.T) {
+	query := "mana:3"
+	parts := Parse(query)
+
+	expectedPart := map[string]string{"mana": "3"}
+
+	if parts["mana"] == "" {
+		t.Error("No 'mana' part in results")
+	}
+
+	if parts["mana"] != expectedPart["mana"] {
+		t.Error("Expected part[0] to be mana with value '3'")
+	}
+}
+
 func TestConsolidated(t *testing.T) {
-	query := "pow:5 tou:5 loy:5 type:creature"
+	query := "pow:5 tou:5 loy:5 type:creature m:3"
 	parts := Parse(query)
 
 	expectedParts := map[string]string{
@@ -116,23 +146,26 @@ func TestConsolidated(t *testing.T) {
 		"toughness": "5",
 		"loyalty":   "5",
 		"type":      "creature",
+		"mana":      "3",
 	}
 
 	hasPower := parts["power"] != ""
 	hasToughness := parts["toughness"] != ""
 	hasLoyalty := parts["loyalty"] != ""
 	hasType := parts["type"] != ""
+	hasMana := parts["mana"] != ""
 
 	matchedPower := parts["power"] == expectedParts["power"]
 	matchedToughness := parts["toughness"] == expectedParts["toughness"]
 	matchedLoyalty := parts["loyalty"] == expectedParts["loyalty"]
 	matchedType := parts["type"] == expectedParts["type"]
+	matchedMana := parts["mana"] == expectedParts["mana"]
 
-	if !hasPower || !hasToughness || !hasLoyalty || !hasType {
+	if !hasPower || !hasToughness || !hasLoyalty || !hasType || !hasMana {
 		t.Error("Missing required part from parsed tokens")
 	}
 
-	if !matchedPower || !matchedToughness || !matchedLoyalty || !matchedType {
+	if !matchedPower || !matchedToughness || !matchedLoyalty || !matchedType || !matchedMana {
 		t.Error("Part mismatch")
 	}
 }
