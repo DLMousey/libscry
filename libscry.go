@@ -1,6 +1,9 @@
 package main
 
 import (
+	"libscry/modules"
+	"libscry/structs"
+	"strconv"
 	"strings"
 )
 
@@ -34,13 +37,6 @@ const ETOUGHNESS = "toughness"
 const ELOYALTY = "loyalty"
 const EMANA = "mana"
 
-const CWHITE = "w"
-const CBLUE = "u"
-const CBLACK = "b"
-const CRED = "r"
-const CGREEN = "g"
-const CCOLORLESS = "c"
-
 var expansions = map[string]string{
 	TTYPE:             ETYPE,
 	TTYPEFULL:         ETYPE,
@@ -61,14 +57,6 @@ var expansions = map[string]string{
 	TMANACOSTFULL:     EMANA,
 }
 
-var colours = map[string]string{
-	CWHITE: "white",
-	CBLUE:  "blue",
-	CBLACK: "black",
-	CRED:   "red",
-	CGREEN: "green",
-}
-
 var stopChars []string = []string{
 	TSPACE, TOR, TAND, TTYPE, TTYPEFULL, TCOLOR,
 	TCOLORFULL, TCOLORCORRECTFULL, TORACLE,
@@ -77,9 +65,7 @@ var stopChars []string = []string{
 	TLOYALTY, TLOYALTYFULL, TMANACOST, TMANACOSTFULL,
 }
 
-func Parse(input string) map[string]string {
-	criteria := make(map[string]string)
-
+func Parse(input string) structs.ParseResult {
 	// Break string into parts on each space
 	// Iterate through each part
 	// If a part begins with a quote mark, find the next part that contains another quote to delimit it,
@@ -92,7 +78,11 @@ func Parse(input string) map[string]string {
 	input = strings.ToLower(input)
 	parts := strings.Split(input, TSPACE)
 
-	for idx, part := range parts {
+	structCriteria := structs.ParseResult{
+		ColourIdentity: []string{},
+	}
+
+	for _, part := range parts {
 		// Iterate over each of the tokens for each part and see if it's contained within this part
 		for _, stopChar := range stopChars {
 			hastoken := strings.Contains(part, stopChar)
@@ -107,24 +97,35 @@ func Parse(input string) map[string]string {
 				expansion := expansions[marker]
 
 				switch expansion {
-				case EORACLE:
-					extractName(criteria, idx, stopChar, part, parts, expansion)
-					break
+				//case EORACLE:
+				//	extractName(criteria, idx, stopChar, part, parts, expansion)
+				//	break
 				case ECOLOR:
-					criteria[ECOLOR] = colours[part[endIndex:endIndex+1]]
+					colours, err := modules.ParseColourIdentity(stopChar, part, parts)
+					structCriteria.ColourIdentity = append(structCriteria.ColourIdentity, colours...)
+
+					if err != nil {
+						panic(err)
+					}
 					break
-				case EPOWER, ETOUGHNESS, ELOYALTY, ETYPE, EMANA:
-					criteria[expansion] = part[endIndex:]
+				case EPOWER:
+					structCriteria.Power, _ = strconv.Atoi(part[endIndex:])
 					break
-				default:
-					extractName(criteria, idx, stopChar, part, parts, expansion)
+				case ETOUGHNESS:
+					structCriteria.Toughness, _ = strconv.Atoi(part[endIndex:])
 					break
+				case ELOYALTY:
+					structCriteria.Loyalty, _ = strconv.Atoi(part[endIndex:])
+					break
+					//default:
+					//	extractName(criteria, idx, stopChar, part, parts, expansion)
+					//	break
 				}
 			}
 		}
 	}
 
-	return criteria
+	return structCriteria
 }
 
 func extractName(criteria map[string]string, index int, stopChar string, part string, parts []string, expansion string) {
