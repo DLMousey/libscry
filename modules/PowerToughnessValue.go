@@ -35,7 +35,7 @@ func parseNumericValue(stopChar string, part string, parts []string) (structs.Nu
 	hadOperator := false
 
 	comparison := strings.ReplaceAll(part, stopChar, "")
-	nonOpPattern := regexp.MustCompile(`([^<=>])`)
+	nonOpPattern := regexp.MustCompile(`([^<!=>])`)
 	nComparison := nonOpPattern.ReplaceAllString(comparison, "")
 
 	for key, _ := range operators {

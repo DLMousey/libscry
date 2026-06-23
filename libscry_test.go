@@ -152,6 +152,24 @@ func TestPowerImplicit(t *testing.T) {
 	}
 }
 
+func TestPowerNotEqualTo(t *testing.T) {
+	query := "pow:!=5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "neq",
+		Value:    "5",
+	}
+
+	if parts.Power.Operator != expectedPart.Operator {
+		t.Error("Expected power operator to be " + expectedPart.Operator + ", got " + parts.Power.Operator)
+	}
+
+	if parts.Power.Value != expectedPart.Value {
+		t.Error("Expected power value to be " + expectedPart.Value + ", got " + parts.Power.Value)
+	}
+}
+
 func TestPowerLessThan(t *testing.T) {
 	query := "pow:<5"
 	parts := Parse(query)
@@ -221,6 +239,222 @@ func TestPowerGreaterThanEqualTo(t *testing.T) {
 
 	if parts.Power.Value != expectedPart.Value {
 		t.Error("Expected power value to be " + expectedPart.Value + ", got " + parts.Power.Value)
+	}
+}
+
+func TestToughnessImplicit(t *testing.T) {
+	query := "tou:5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "eq",
+		Value:    "5",
+	}
+
+	if parts.Toughness.Operator != expectedPart.Operator {
+		t.Error("Expected toughness operator to be " + expectedPart.Operator + ", got " + parts.Toughness.Operator)
+	}
+
+	if parts.Toughness.Value != expectedPart.Value {
+		t.Error("Expected toughness value to be " + expectedPart.Value + ", got " + parts.Toughness.Value)
+	}
+}
+
+func TestToughnessNotEqualTo(t *testing.T) {
+	query := "tou:!=5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "neq",
+		Value:    "5",
+	}
+
+	if parts.Toughness.Operator != expectedPart.Operator {
+		t.Error("Expected toughness operator to be " + expectedPart.Operator + ", got " + parts.Toughness.Operator)
+	}
+
+	if parts.Toughness.Value != expectedPart.Value {
+		t.Error("Expected toughness value to be " + expectedPart.Value + ", got " + parts.Toughness.Value)
+	}
+}
+
+func TestToughnessLessThan(t *testing.T) {
+	query := "tou:<5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "lt",
+		Value:    "5",
+	}
+
+	if parts.Toughness.Operator != expectedPart.Operator {
+		t.Error("Expected toughness operator to be " + expectedPart.Operator + ", got " + parts.Toughness.Operator)
+	}
+
+	if parts.Toughness.Value != expectedPart.Value {
+		t.Error("Expected toughness value to be " + expectedPart.Value + ", got " + parts.Toughness.Value)
+	}
+}
+
+func TestToughnessLessThanEqualTo(t *testing.T) {
+	query := "tou:<=5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "lteq",
+		Value:    "5",
+	}
+
+	if parts.Toughness.Operator != expectedPart.Operator {
+		t.Error("Expected toughness operator to be " + expectedPart.Operator + ", got " + parts.Toughness.Operator)
+	}
+
+	if parts.Toughness.Value != expectedPart.Value {
+		t.Error("Expected toughness value to be " + expectedPart.Value + ", got " + parts.Toughness.Value)
+	}
+}
+
+func TestToughnessGreaterThan(t *testing.T) {
+	query := "tou:>5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "gt",
+		Value:    "5",
+	}
+
+	if parts.Toughness.Operator != expectedPart.Operator {
+		t.Error("Expected toughness operator to be " + expectedPart.Operator + ", got " + parts.Toughness.Operator)
+	}
+
+	if parts.Toughness.Value != expectedPart.Value {
+		t.Error("Expected toughness value to be " + expectedPart.Value + ", got " + parts.Toughness.Value)
+	}
+}
+
+func TestToughnessGreaterThanEqualTo(t *testing.T) {
+	query := "tou:>=5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "gteq",
+		Value:    "5",
+	}
+
+	if parts.Toughness.Operator != expectedPart.Operator {
+		t.Error("Expected toughness operator to be " + expectedPart.Operator + ", got " + parts.Toughness.Operator)
+	}
+
+	if parts.Toughness.Value != expectedPart.Value {
+		t.Error("Expected toughness value to be " + expectedPart.Value + ", got " + parts.Toughness.Value)
+	}
+}
+
+func TestLoyaltyImplicit(t *testing.T) {
+	query := "loy:5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "eq",
+		Value:    "5",
+	}
+
+	if parts.Loyalty.Operator != expectedPart.Operator {
+		t.Error("Expected loyalty operator to be " + expectedPart.Operator + ", got " + parts.Loyalty.Operator)
+	}
+
+	if parts.Loyalty.Value != expectedPart.Value {
+		t.Error("Expected loyalty value to be " + expectedPart.Value + ", got " + parts.Loyalty.Value)
+	}
+}
+
+func TestLoyaltyNotEqualTo(t *testing.T) {
+	query := "loy:!=5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "neq",
+		Value:    "5",
+	}
+
+	if parts.Loyalty.Operator != expectedPart.Operator {
+		t.Error("Expected loyalty operator to be " + expectedPart.Operator + ", got " + parts.Loyalty.Operator)
+	}
+
+	if parts.Loyalty.Value != expectedPart.Value {
+		t.Error("Expected loyalty value to be " + expectedPart.Value + ", got " + parts.Loyalty.Value)
+	}
+}
+
+func TestLoyaltyLessThan(t *testing.T) {
+	query := "loy:<5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "lt",
+		Value:    "5",
+	}
+
+	if parts.Loyalty.Operator != expectedPart.Operator {
+		t.Error("Expected loyalty operator to be " + expectedPart.Operator + ", got " + parts.Loyalty.Operator)
+	}
+
+	if parts.Loyalty.Value != expectedPart.Value {
+		t.Error("Expected loyalty value to be " + expectedPart.Value + ", got " + parts.Loyalty.Value)
+	}
+}
+
+func TestLoyaltyLessThanEqualTo(t *testing.T) {
+	query := "loy:<=5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "lteq",
+		Value:    "5",
+	}
+
+	if parts.Loyalty.Operator != expectedPart.Operator {
+		t.Error("Expected loyalty operator to be " + expectedPart.Operator + ", got " + parts.Loyalty.Operator)
+	}
+
+	if parts.Loyalty.Value != expectedPart.Value {
+		t.Error("Expected loyalty value to be " + expectedPart.Value + ", got " + parts.Loyalty.Value)
+	}
+}
+
+func TestLoyaltyGreaterThan(t *testing.T) {
+	query := "loy:>5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "gt",
+		Value:    "5",
+	}
+
+	if parts.Loyalty.Operator != expectedPart.Operator {
+		t.Error("Expected loyalty operator to be " + expectedPart.Operator + ", got " + parts.Loyalty.Operator)
+	}
+
+	if parts.Loyalty.Value != expectedPart.Value {
+		t.Error("Expected loyalty value to be " + expectedPart.Value + ", got " + parts.Loyalty.Value)
+	}
+}
+
+func TestLoyaltyGreaterThanEqualTo(t *testing.T) {
+	query := "loy:>=5"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: "gteq",
+		Value:    "5",
+	}
+
+	if parts.Loyalty.Operator != expectedPart.Operator {
+		t.Error("Expected loyalty operator to be " + expectedPart.Operator + ", got " + parts.Loyalty.Operator)
+	}
+
+	if parts.Loyalty.Value != expectedPart.Value {
+		t.Error("Expected loyalty value to be " + expectedPart.Value + ", got " + parts.Loyalty.Value)
 	}
 }
 
