@@ -3,7 +3,6 @@ package main
 import (
 	"libscry/modules"
 	"libscry/structs"
-	"strconv"
 	"strings"
 )
 
@@ -106,13 +105,13 @@ func Parse(input string) structs.ParseResult {
 					}
 					break
 				case EPOWER:
-					structCriteria.Power, _ = strconv.Atoi(part[endIndex:])
+					structCriteria.Power, _ = modules.ParsePowerValue(stopChar, part, parts)
 					break
 				case ETOUGHNESS:
-					structCriteria.Toughness, _ = strconv.Atoi(part[endIndex:])
+					structCriteria.Toughness, _ = modules.ParseToughnessValue(stopChar, part, parts)
 					break
 				case ELOYALTY:
-					structCriteria.Loyalty, _ = strconv.Atoi(part[endIndex:])
+					structCriteria.Loyalty, _ = modules.ParseLoyaltyValue(stopChar, part, parts)
 					break
 				case ETYPE:
 					structCriteria.Type = part[endIndex:]
