@@ -97,9 +97,6 @@ func Parse(input string) structs.ParseResult {
 				expansion := expansions[marker]
 
 				switch expansion {
-				//case EORACLE:
-				//	extractName(criteria, idx, stopChar, part, parts, expansion)
-				//	break
 				case ECOLOR:
 					colours, err := modules.ParseColourIdentity(stopChar, part, parts)
 					structCriteria.ColourIdentity = append(structCriteria.ColourIdentity, colours...)
@@ -117,9 +114,8 @@ func Parse(input string) structs.ParseResult {
 				case ELOYALTY:
 					structCriteria.Loyalty, _ = strconv.Atoi(part[endIndex:])
 					break
-					//default:
-					//	extractName(criteria, idx, stopChar, part, parts, expansion)
-					//	break
+				case ETYPE:
+					structCriteria.Type = part[endIndex:]
 				}
 			}
 		}
