@@ -26,6 +26,8 @@ const TLOYALTYFULL = "loyalty:"
 const TLOYALTY = "loy:"
 const TMANACOST = "m:"
 const TMANACOSTFULL = "mana:"
+const TRARITY = "r:"
+const TRARITYFULL = "rarity:"
 
 const ETYPE = "type"
 const ENAME = "name"
@@ -35,6 +37,7 @@ const EPOWER = "power"
 const ETOUGHNESS = "toughness"
 const ELOYALTY = "loyalty"
 const EMANA = "mana"
+const ERARITY = "rarity"
 
 var expansions = map[string]string{
 	TTYPE:             ETYPE,
@@ -54,6 +57,8 @@ var expansions = map[string]string{
 	TLOYALTY:          ELOYALTY,
 	TMANACOST:         EMANA,
 	TMANACOSTFULL:     EMANA,
+	TRARITY:           ERARITY,
+	TRARITYFULL:       ERARITY,
 }
 
 var stopChars []string = []string{
@@ -62,6 +67,7 @@ var stopChars []string = []string{
 	TORACLEFULL, TDOUBLEQUOTE, TSINGLEQUOTE,
 	TPOWER, TPOWERFULL, TTOUGHNESS, TTOUGHNESSFULL,
 	TLOYALTY, TLOYALTYFULL, TMANACOST, TMANACOSTFULL,
+	TRARITY, TRARITYFULL,
 }
 
 func Parse(input string) structs.ParseResult {
@@ -115,6 +121,10 @@ func Parse(input string) structs.ParseResult {
 					break
 				case ETYPE:
 					structCriteria.Type = part[endIndex:]
+					break
+				case ERARITY:
+					structCriteria.Rarity, _ = modules.ParseRarity(stopChar, part, parts)
+					break
 				}
 			}
 		}

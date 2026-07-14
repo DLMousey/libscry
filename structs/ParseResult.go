@@ -6,4 +6,5 @@ type ParseResult struct {
 	Toughness      NumericValue `json:"toughness,omitempty"`
 	Loyalty        NumericValue `json:"loyalty,omitempty"`
 	Type           string       `json:"type,omitempty"`
+	Rarity         []string     `json:"rarity,omitempty"`
 }

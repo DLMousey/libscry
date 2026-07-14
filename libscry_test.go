@@ -2,6 +2,7 @@ package main
 
 import (
 	"libscry/structs"
+	"strings"
 	"testing"
 )
 
@@ -455,6 +456,124 @@ func TestLoyaltyGreaterThanEqualTo(t *testing.T) {
 
 	if parts.Loyalty.Value != expectedPart.Value {
 		t.Error("Expected loyalty value to be " + expectedPart.Value + ", got " + parts.Loyalty.Value)
+	}
+}
+
+func TestRarityMythicSingle(t *testing.T) {
+	query := "r:m"
+	parts := Parse(query)
+
+	expectedPart := make([]string, 0)
+	expectedPart = append(expectedPart, "mythic")
+
+	if parts.Rarity[0] != expectedPart[0] {
+		t.Error("Expected rarity to be " + expectedPart[0] + ", got " + strings.Join(parts.Rarity, ", "))
+	}
+}
+
+func TestRarityRareSingle(t *testing.T) {
+	query := "r:r"
+	parts := Parse(query)
+
+	expectedPart := make([]string, 0)
+	expectedPart = append(expectedPart, "rare")
+
+	if parts.Rarity[0] != expectedPart[0] {
+		t.Error("Expected rarity to be " + expectedPart[0] + ", got " + strings.Join(parts.Rarity, ", "))
+	}
+}
+
+func TestRarityUncommonSingle(t *testing.T) {
+	query := "r:u"
+	parts := Parse(query)
+
+	expectedPart := make([]string, 0)
+	expectedPart = append(expectedPart, "uncommon")
+
+	if parts.Rarity[0] != expectedPart[0] {
+		t.Error("Expected rarity to be " + expectedPart[0] + ", got " + strings.Join(parts.Rarity, ", "))
+	}
+}
+
+func TestRarityCommonSingle(t *testing.T) {
+	query := "r:c"
+	parts := Parse(query)
+
+	expectedPart := make([]string, 0)
+	expectedPart = append(expectedPart, "common")
+
+	if parts.Rarity[0] != expectedPart[0] {
+		t.Error("Expected rarity to be " + expectedPart[0] + ", got " + strings.Join(parts.Rarity, ", "))
+	}
+}
+
+func TestRarityMythicRareMultiple(t *testing.T) {
+	query := "r:m,r"
+	parts := Parse(query)
+
+	expectedPart := make([]string, 0)
+	expectedPart = append(expectedPart, "mythic")
+	expectedPart = append(expectedPart, "rare")
+
+	if parts.Rarity[0] != expectedPart[0] {
+		t.Error("Expected rarity[0] to be " + expectedPart[0] + ", got " + parts.Rarity[0])
+	}
+
+	if parts.Rarity[1] != expectedPart[1] {
+		t.Error("Expected rarit[1] to be " + expectedPart[1] + ", got " + parts.Rarity[1])
+	}
+}
+
+func TestRarityUncommonCommonMultiple(t *testing.T) {
+	query := "r:u,c"
+	parts := Parse(query)
+
+	expectedPart := make([]string, 0)
+	expectedPart = append(expectedPart, "uncommon")
+	expectedPart = append(expectedPart, "common")
+
+	if parts.Rarity[0] != expectedPart[0] {
+		t.Error("Expected rarity[0] to be " + expectedPart[0] + ", got " + parts.Rarity[0])
+	}
+
+	if parts.Rarity[1] != expectedPart[1] {
+		t.Error("Expected rarit[1] to be " + expectedPart[1] + ", got " + parts.Rarity[1])
+	}
+}
+
+func TestRaritySpecialBonusMultiple(t *testing.T) {
+	query := "r:s,b"
+	parts := Parse(query)
+
+	expectedPart := make([]string, 0)
+	expectedPart = append(expectedPart, "special")
+	expectedPart = append(expectedPart, "bonus")
+
+	if parts.Rarity[0] != expectedPart[0] {
+		t.Error("Expected rarity[0] to be " + expectedPart[0] + ", got " + parts.Rarity[0])
+	}
+
+	if parts.Rarity[1] != expectedPart[1] {
+		t.Error("Expected rarity[1] to be " + expectedPart[1] + ", got " + parts.Rarity[1])
+	}
+}
+
+func TestRarityAllValuesMultiple(t *testing.T) {
+	query := "r:m,r,u,c,s,b"
+	parts := Parse(query)
+
+	expectedPart := make([]string, 0)
+	expectedPart = append(expectedPart, "mythic")
+	expectedPart = append(expectedPart, "rare")
+	expectedPart = append(expectedPart, "uncommon")
+	expectedPart = append(expectedPart, "common")
+	expectedPart = append(expectedPart, "special")
+	expectedPart = append(expectedPart, "bonus")
+
+	for idx, part := range parts.Rarity {
+		if part != expectedPart[idx] {
+			t.Error("Expected rarity[" + string(rune(idx)) + "] to be " + expectedPart[idx] + ", got " + part)
+		}
 	}
 }
 
