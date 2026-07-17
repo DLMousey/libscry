@@ -577,69 +577,74 @@ func TestRarityAllValuesMultiple(t *testing.T) {
 	}
 }
 
-// Disabled due to mana cost requiring rework
-//func TestManaCost(t *testing.T) {
-//	query := "m:3"
-//	parts := Parse(query)
-//
-//	expectedPart := map[string]string{"mana": "3"}
-//
-//	if parts["mana"] == "" {
-//		t.Error("No 'mana' part in results")
-//	}
-//
-//	if parts["mana"] != expectedPart["mana"] {
-//		t.Error("Expected part[0] to be mana with value '3'")
-//	}
-//}
-//
-//func TestManaCostFull(t *testing.T) {
-//	query := "mana:3"
-//	parts := Parse(query)
-//
-//	expectedPart := map[string]string{"mana": "3"}
-//
-//	if parts["mana"] == "" {
-//		t.Error("No 'mana' part in results")
-//	}
-//
-//	if parts["mana"] != expectedPart["mana"] {
-//		t.Error("Expected part[0] to be mana with value '3'")
-//	}
-//}
+func TestManaValueEquals(t *testing.T) {
+	query := "m:3"
+	parts := Parse(query)
 
-//func TestConsolidated(t *testing.T) {
-//	query := "pow:5 tou:5 loy:5 type:creature m:3"
-//	parts := Parse(query)
-//
-//	expectedParts := map[string]int{
-//		"power":     5,
-//		"toughness": 5,
-//		"loyalty":   5,
-//		//"type":      "creature",
-//		//"mana": 3,
-//	}
-//
-//	expectedType := "creature"
-//
-//	hasPower := parts.Power != {}
-//	hasToughness := parts.Toughness != 0
-//	hasLoyalty := parts.Loyalty != 0
-//	hasType := parts.Type != ""
-//
-//	//hasMana := parts["mana"] != ""
-//
-//	matchedPower := parts.Power == expectedParts["power"]
-//	matchedToughness := parts.Toughness == expectedParts["toughness"]
-//	matchedLoyalty := parts.Loyalty == expectedParts["loyalty"]
-//	matchedType := parts.Type == expectedType
-//	//matchedMana := parts["mana"] == expectedParts["mana"]
-//
-//	if !hasPower || !hasToughness || !hasLoyalty || !hasType {
-//		t.Error("Missing required part from parsed tokens")
-//	}
-//
-//	if !matchedPower || !matchedToughness || !matchedLoyalty || !matchedType {
-//		t.Error("Part mismatch")
-//	}
-//}
+	expectedPart := structs.NumericValue{
+		Operator: structs.Operators[structs.CEQUALS],
+		Value:    "3",
+	}
+
+	CompareManaValueResult(parts, expectedPart, t)
+}
+
+func TestManaValueNotEquals(t *testing.T) {
+	query := "m:!=3"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: structs.Operators[structs.CNOTEQUALS],
+		Value:    "3",
+	}
+
+	CompareManaValueResult(parts, expectedPart, t)
+}
+
+func TestManaValueLessThan(t *testing.T) {
+	query := "m:<3"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: structs.Operators[structs.CLESSTHAN],
+		Value:    "3",
+	}
+
+	CompareManaValueResult(parts, expectedPart, t)
+}
+
+func TestManaValueLessThanEquals(t *testing.T) {
+	query := "m:<=3"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: structs.Operators[structs.CLESSTHANEQUALTO],
+		Value:    "3",
+	}
+
+	CompareManaValueResult(parts, expectedPart, t)
+}
+
+func TestManaValueGreaterThan(t *testing.T) {
+	query := "m:>3"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: structs.Operators[structs.CGREATERTHAN],
+		Value:    "3",
+	}
+
+	CompareManaValueResult(parts, expectedPart, t)
+}
+
+func TestManaValueGreaterThanEquals(t *testing.T) {
+	query := "m:>=3"
+	parts := Parse(query)
+
+	expectedPart := structs.NumericValue{
+		Operator: structs.Operators[structs.CGREATERTHANEQUALTO],
+		Value:    "3",
+	}
+
+	CompareManaValueResult(parts, expectedPart, t)
+}

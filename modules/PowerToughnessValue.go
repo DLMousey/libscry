@@ -6,22 +6,6 @@ import (
 	"strings"
 )
 
-const CLESSTHAN = "<"
-const CLESSTHANEQUALTO = "<="
-const CEQUALS = "="
-const CNOTEQUALS = "!="
-const CGREATERTHANEQUALTO = ">="
-const CGREATERTHAN = ">"
-
-var operators = map[string]string{
-	CLESSTHAN:           "lt",
-	CLESSTHANEQUALTO:    "lteq",
-	CEQUALS:             "eq",
-	CNOTEQUALS:          "neq",
-	CGREATERTHAN:        "gt",
-	CGREATERTHANEQUALTO: "gteq",
-}
-
 func parseNumericValue(stopChar string, part string, parts []string) (structs.NumericValue, error) {
 	// Strip the stopChar from the part
 	// Run a substring match for any operator
@@ -29,7 +13,7 @@ func parseNumericValue(stopChar string, part string, parts []string) (structs.Nu
 	// Split the string between the operator and the value
 
 	// Sensible default of explicit equals operator (pow:5 would be an eq query)
-	matchedOperator := CEQUALS
+	matchedOperator := structs.CEQUALS
 
 	// Flag to set whether an operator was provided, which changes value extraction behaviour
 	hadOperator := false
@@ -38,7 +22,7 @@ func parseNumericValue(stopChar string, part string, parts []string) (structs.Nu
 	nonOpPattern := regexp.MustCompile(`([^<!=>])`)
 	nComparison := nonOpPattern.ReplaceAllString(comparison, "")
 
-	for key, _ := range operators {
+	for key, _ := range structs.Operators {
 		// Will need to manually check this rather than using contains as it does partial matches
 		if key == nComparison {
 			matchedOperator = key
@@ -58,7 +42,7 @@ func parseNumericValue(stopChar string, part string, parts []string) (structs.Nu
 	}
 
 	result := structs.NumericValue{
-		Operator: operators[matchedOperator],
+		Operator: structs.Operators[matchedOperator],
 		Value:    val,
 	}
 

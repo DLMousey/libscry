@@ -125,6 +125,9 @@ func Parse(input string) structs.ParseResult {
 				case ERARITY:
 					structCriteria.Rarity, _ = modules.ParseRarity(stopChar, part, parts)
 					break
+				case EMANA:
+					structCriteria.ManaCost, _ = modules.ParseManaValue(stopChar, part, parts)
+					break
 				}
 			}
 		}
