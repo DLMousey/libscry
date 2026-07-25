@@ -15,3 +15,12 @@ var Operators = map[string]string{
 	CGREATERTHAN:        "gt",
 	CGREATERTHANEQUALTO: "gteq",
 }
+
+var ReverseOperators = map[string]string{
+	"lt":   CLESSTHAN,
+	"lteq": CLESSTHANEQUALTO,
+	"eq":   CEQUALS,
+	"neq":  CGREATERTHAN,
+	"gt":   CGREATERTHANEQUALTO,
+	"gteq": CGREATERTHANEQUALTO,
+}
